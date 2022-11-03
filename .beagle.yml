@@ -17,7 +17,6 @@ steps:
     image: registry.cn-qingdao.aliyuncs.com/wod/devops-s3-cache:1.0
     settings:
       restore: true
-      path: /cache/open-beagle/coredns
       mount:
         - ./.git
         - ./vendor
