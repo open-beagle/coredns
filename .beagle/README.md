@@ -1,9 +1,9 @@
-# remote
+# coredns
 
 ```bash
 git remote add upstream git@github.com:coredns/coredns.git
 git fetch upstream
-git merge v1.9.4
+git merge v1.10.1
 ```
 
 ## build
@@ -29,7 +29,7 @@ docker run -it --rm \
 -e PLUGIN_BASE=registry.cn-qingdao.aliyuncs.com/wod/alpine:3 \
 -e PLUGIN_DOCKERFILE=.beagle/dockerfile \
 -e PLUGIN_REPO=wod/coredns \
--e PLUGIN_VERSION='v1.9.4' \
+-e PLUGIN_VERSION='v1.10.1' \
 -e PLUGIN_ARGS='TARGETOS=linux,TARGETARCH=amd64' \
 -e PLUGIN_REGISTRY=registry.cn-qingdao.aliyuncs.com \
 -e REGISTRY_USER=<REGISTRY_USER> \

@@ -57,7 +57,7 @@ steps:
       base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3-amd64
       dockerfile: .beagle/dockerfile
       repo: wod/coredns
-      version: 'v1.9.4'
+      version: 'v1.10.1'
       channel: 'amd64'
       args: 'TARGETOS=linux,TARGETARCH=amd64'
       registry: registry.cn-qingdao.aliyuncs.com
@@ -75,7 +75,7 @@ steps:
       base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3-arm64
       dockerfile: .beagle/dockerfile
       repo: wod/coredns
-      version: 'v1.9.4'
+      version: 'v1.10.1'
       channel: 'arm64'
       args: 'TARGETOS=linux,TARGETARCH=arm64'
       registry: registry.cn-qingdao.aliyuncs.com
@@ -93,7 +93,7 @@ steps:
       base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3-ppc64le
       dockerfile: .beagle/dockerfile
       repo: wod/coredns
-      version: 'v1.9.4'
+      version: 'v1.10.1'
       channel: 'ppc64le'
       args: 'TARGETOS=linux,TARGETARCH=ppc64le'
       registry: registry.cn-qingdao.aliyuncs.com
@@ -111,7 +111,7 @@ steps:
       base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3-mips64le
       dockerfile: .beagle/dockerfile
       repo: wod/coredns
-      version: 'v1.9.4'
+      version: 'v1.10.1'
       channel: 'mips64le'
       args: 'TARGETOS=linux,TARGETARCH=mips64le'
       registry: registry.cn-qingdao.aliyuncs.com
@@ -124,8 +124,8 @@ steps:
     image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker-manifest:1.0
     settings:
       platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/mips64le
-      template: registry.cn-qingdao.aliyuncs.com/wod/coredns:v1.9.4-ARCH
-      target: registry.cn-qingdao.aliyuncs.com/wod/coredns:v1.9.4
+      template: registry.cn-qingdao.aliyuncs.com/wod/coredns:v1.10.1-ARCH
+      target: registry.cn-qingdao.aliyuncs.com/wod/coredns:v1.10.1
       username:
         from_secret: REGISTRY_USER_ALIYUN
       password:
