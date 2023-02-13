@@ -23,6 +23,12 @@ func setup(c *caddy.Controller) error {
 	if err != nil {
 		return plugin.Error("cache", err)
 	}
+
+	c.OnStartup(func() error {
+		ca.viewMetricLabel = dnsserver.GetConfig(c).ViewName
+		return nil
+	})
+
 	dnsserver.GetConfig(c).AddPlugin(func(next plugin.Handler) plugin.Handler {
 		ca.Next = next
 		return ca
@@ -234,6 +240,11 @@ func cacheParse(c *caddy.Controller) (*Cache, error) {
 				default:
 					return nil, fmt.Errorf("cache type for disable must be %q or %q", Success, Denial)
 				}
+			case "keepttl":
+				if len(args) != 0 {
+					return nil, c.ArgErr()
+				}
+				ca.keepttl = true
 			default:
 				return nil, c.ArgErr()
 			}

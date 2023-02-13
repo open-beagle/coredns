@@ -49,6 +49,8 @@ const (
 	actionBlock
 	// actionFilter returns empty sets for queries towards protected DNS zones.
 	actionFilter
+	// actionDrop does not respond for queries towards the protected DNS zones.
+	actionDrop
 )
 
 var log = clog.NewWithPlugin("acl")
@@ -67,6 +69,11 @@ RulesCheckLoop:
 
 		action := matchWithPolicies(rule.policies, w, r)
 		switch action {
+		case actionDrop:
+			{
+				RequestDropCount.WithLabelValues(metrics.WithServer(ctx), zone, metrics.WithView(ctx)).Inc()
+				return dns.RcodeSuccess, nil
+			}
 		case actionBlock:
 			{
 				m := new(dns.Msg).
@@ -75,7 +82,7 @@ RulesCheckLoop:
 				ede := dns.EDNS0_EDE{InfoCode: dns.ExtendedErrorCodeBlocked}
 				m.IsEdns0().Option = append(m.IsEdns0().Option, &ede)
 				w.WriteMsg(m)
-				RequestBlockCount.WithLabelValues(metrics.WithServer(ctx), zone).Inc()
+				RequestBlockCount.WithLabelValues(metrics.WithServer(ctx), zone, metrics.WithView(ctx)).Inc()
 				return dns.RcodeSuccess, nil
 			}
 		case actionAllow:
@@ -90,13 +97,13 @@ RulesCheckLoop:
 				ede := dns.EDNS0_EDE{InfoCode: dns.ExtendedErrorCodeFiltered}
 				m.IsEdns0().Option = append(m.IsEdns0().Option, &ede)
 				w.WriteMsg(m)
-				RequestFilterCount.WithLabelValues(metrics.WithServer(ctx), zone).Inc()
+				RequestFilterCount.WithLabelValues(metrics.WithServer(ctx), zone, metrics.WithView(ctx)).Inc()
 				return dns.RcodeSuccess, nil
 			}
 		}
 	}
 
-	RequestAllowCount.WithLabelValues(metrics.WithServer(ctx)).Inc()
+	RequestAllowCount.WithLabelValues(metrics.WithServer(ctx), metrics.WithView(ctx)).Inc()
 	return plugin.NextOrFailure(state.Name(), a.Next, ctx, w, r)
 }
 
