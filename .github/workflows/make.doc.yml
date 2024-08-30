@@ -13,12 +13,15 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
+        uses: actions/checkout@v4
+
+      - name: Setup Go Version
+        run: echo "GO_VERSION=$(cat .go-version)" >> $GITHUB_ENV
 
       - name: Setup Go
-        uses: actions/setup-go@6edd4406fa81c3da01a34fa6f6343087c207a568
+        uses: actions/setup-go@v5
         with:
-          go-version: '1.19.0'
+          go-version: ${{ env.GO_VERSION }}
 
       - name: Update Docs
         run: |

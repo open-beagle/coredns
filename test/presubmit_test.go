@@ -260,7 +260,7 @@ func (w *testImportOrderingWalker) walk(path string, info os.FileInfo, _ error) 
 	}
 
 	// Ok, now that we have the type, let's see if all members adhere to it.
-	// After that we check if the are in the right order.
+	// After that we check if they are in the right order.
 	for i := 0; i <= bl; i++ {
 		for _, p := range blocks[i] {
 			t := importtype(p.Path.Value)
@@ -308,7 +308,7 @@ func importtype(s string) string {
 	return "std"
 }
 
-// TestMetricNaming tests the imports path used for metrics. It depends on faillint to be installed: go install github.com/fatih/faillint
+// TestPrometheusImports tests the imports path used for metrics. It depends on faillint to be installed: go install github.com/fatih/faillint
 func TestPrometheusImports(t *testing.T) {
 	if _, err := exec.LookPath("faillint"); err != nil {
 		fmt.Fprintf(os.Stderr, "Not executing TestPrometheusImports: faillint not found\n")
