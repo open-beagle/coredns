@@ -36,7 +36,7 @@ steps:
       proxy:
         from_secret: SOCKS5_PROXY
 
-  - name: patch
+  - name: build
     image: registry.cn-qingdao.aliyuncs.com/wod/golang:1.22
     commands:
       - bash .beagle/build.sh
