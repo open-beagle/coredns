@@ -20,7 +20,7 @@ jobs:
           fuzz-seconds: 600
           dry-run: false
       - name: Upload Crash
-        uses: actions/upload-artifact@1746f4ab65b179e0ea60a494b83293b640dd5bba
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874
         if: failure() && steps.build.outcome == 'success'
         with:
           name: artifacts
