@@ -10,7 +10,7 @@ LABEL maintainer=${AUTHOR} version=${VERSION}
 ARG TARGETOS
 ARG TARGETARCH
 
-COPY ./dist/coredns-$TARGETOS-$TARGETARCH /coredns
+COPY ./build/coredns-$TARGETARCH /coredns
 
 EXPOSE 53 53/udp
 ENTRYPOINT ["/coredns"]

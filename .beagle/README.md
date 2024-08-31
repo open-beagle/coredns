@@ -3,23 +3,25 @@
 ```bash
 git remote add upstream git@github.com:coredns/coredns.git
 git fetch upstream
-git merge v1.10.1
+git merge v1.11.3
 ```
 
 ## build
 
 ```bash
-# patch
-git apply .beagle/0001-kubernetai.patch
-
-# devops-go-arch
+# build
 docker run -it --rm \
--w /go/src/github.com/coredns/coredns \
--v $PWD/:/go/src/github.com/coredns/coredns \
--e CI_WORKSPACE=/go/src/github.com/coredns/coredns \
--e PLUGIN_BINARY=coredns \
--e GO111MODULE=off \
-registry.cn-qingdao.aliyuncs.com/wod/devops-go-arch:1.19-alpine
+  -w /go/src/github.com/coredns/coredns \
+  -v $PWD/:/go/src/github.com/coredns/coredns \
+  registry.cn-qingdao.aliyuncs.com/wod/golang:1.22 \
+  rm -rf vendor && go mod tidy && go mod vendor
+
+# build
+docker run -it --rm \
+  -w /go/src/github.com/coredns/coredns \
+  -v $PWD/:/go/src/github.com/coredns/coredns \
+  registry.cn-qingdao.aliyuncs.com/wod/golang:1.22 \
+  bash .beagle/build.sh
 
 # devops-docker
 docker run -it --rm \
@@ -29,7 +31,7 @@ docker run -it --rm \
 -e PLUGIN_BASE=registry.cn-qingdao.aliyuncs.com/wod/alpine:3 \
 -e PLUGIN_DOCKERFILE=.beagle/dockerfile \
 -e PLUGIN_REPO=wod/coredns \
--e PLUGIN_VERSION='v1.10.1' \
+-e PLUGIN_VERSION='v1.11.3' \
 -e PLUGIN_ARGS='TARGETOS=linux,TARGETARCH=amd64' \
 -e PLUGIN_REGISTRY=registry.cn-qingdao.aliyuncs.com \
 -e REGISTRY_USER=<REGISTRY_USER> \
