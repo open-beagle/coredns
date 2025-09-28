@@ -12,10 +12,10 @@ updates:
       go.etcd.io:
         patterns:
           - "go.etcd.io/etcd/*"
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 0
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 0
