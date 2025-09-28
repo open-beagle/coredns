@@ -5,6 +5,8 @@ set -ex
 export GO111MODULE=on
 export CGO_ENABLED=0
 
+git config --global --add safe.directory $PWD
+
 GIT_COMMIT=$(git rev-parse --short HEAD)
 
 LDFLAGS=(
